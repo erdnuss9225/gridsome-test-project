@@ -4,10 +4,14 @@
 import DefaultLayout from '~/layouts/Default.vue'
 import '~/assets/styles/global.css'
 
+// const data =  {
+//   language: "baba"
+// }
+
 export default function (Vue, { 
   router, 
   head, 
-  isClient, 
+  isClient,
   appOptions
 }) {
   appOptions.data.language = "de"

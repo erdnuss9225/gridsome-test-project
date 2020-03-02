@@ -1,13 +1,18 @@
 <template>
   <div class="layout">
     <header class="header">
-      <strong>
-        <g-link to="/">{{ $static.metadata.siteName }}</g-link>
-      </strong>
-      <nav class="nav">
-        <g-link class="nav__link" to="/">Home</g-link>
-        <g-link class="nav__link" to="/about/">About</g-link>
-      </nav>
+        
+        <g-link class ="headline_page" to="/"><h1>{{ $static.metadata.siteName }}</h1></g-link>
+        
+        <div class="languagepicker">
+          <form>
+            <label for="language-picker-select">Language:</label>
+            <select  v-model="currentLocale" v-on:change="changeLocale">
+              <option v-for="locale in locales" v-bind:value="locale.id">{{locale.name}}</option>
+            </select>
+          </form>
+        </div>
+        <p>{{this.$root.language}}</p>
     </header>
     <slot/>
   </div>
@@ -21,30 +26,25 @@ query {
 }
 </static-query>
 
-<style>
-body {
-  font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
-  margin:0;
-  padding:0;
-  line-height: 1.5;
-}
+<script>
+export default {
+  data () {
+    return {
+            currentLocale: this.$root.language,
+            currentLocaleHelp: {
+              de: ["Mehr lesen", "Weitere Artikel"],
+              en: ["Read More", "Check out further Articles"]
+            },
+            locales: [ {id: 'en', name: 'English', more: 'Read more'}, {id: 'de', name: 'Deutsch', more: 'Mehr lesen'}]
+    }
+  },
+  methods: {
 
-.layout {
-  max-width: 760px;
-  margin: 0 auto;
-  padding-left: 20px;
-  padding-right: 20px;
-}
+    changeLocale () {
 
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-  height: 80px;
-}
+      this.$root.language = this.currentLocale
 
-.nav__link {
-  margin-left: 20px;
+    }
+  }
 }
-</style>
+</script>
